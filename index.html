@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YouTube Video Player</title>
+  <style>
+    body { font-family: Arial; padding: 20px; text-align: center; }
+    iframe { width: 100%; max-width: 560px; height: 315px; margin-top: 20px; }
+    input { width: 80%; padding: 10px; font-size: 16px; }
+    button { padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+
+  <h2>YouTube Video Player</h2>
+  <input type="text" id="youtubeUrl" placeholder="Paste YouTube video link here">
+  <br><br>
+  <button onclick="loadVideo()">Play Video</button>
+
+  <div id="playerContainer"></div>
+
+  <script>
+    function extractVideoID(url) {
+      const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    }
+
+    function loadVideo() {
+      const url = document.getElementById('youtubeUrl').value;
+      const videoId = extractVideoID(url);
+      const container = document.getElementById('playerContainer');
+
+      if (videoId) {
+        container.innerHTML = `
+          <iframe src="https://www.youtube.com/embed/${videoId}" 
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen>
+          </iframe>`;
+      } else {
+        container.innerHTML = "<p style='color:red;'>Invalid YouTube URL</p>";
+      }
+    }
+  </script>
+
+</body>
+</html>
